@@ -189,3 +189,7 @@ button {
   font-size: 16px;
   cursor: pointer;
 }
+
+.hidden {
+  display: none;
+}

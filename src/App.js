@@ -12,6 +12,10 @@ export default function ListingAd({
   psf_max,
   subprice_label,
   availabilities_label,
+  phone_number,
+  owner_number,
+  agent_name,
+  agent_number,
   description,
 }) {
   const [isDescriptionVisible, setDescriptionVisible] = useState(false);
@@ -21,12 +25,16 @@ export default function ListingAd({
     setDescriptionVisible(!isDescriptionVisible);
   };
 
-  const togglePhoneNumber = () => {
+  const togglePhoneNumber = (number) => {
     setPhoneVisible(!isPhoneVisible);
   };
 
   const hashPhoneNumber = (phoneNumber) => {
-    return `${phoneNumber.slice(0, 4)} XXXX`;
+    if (phoneNumber) {
+      return `${phoneNumber.slice(0, 4)} XXXX`;
+    } else {
+      return "N/A";
+    }
   };
 
   return (
@@ -68,10 +76,35 @@ export default function ListingAd({
             {isDescriptionVisible && (
               <p className="description">{description}</p>
             )}
-            <div className="btnDescription">
-              <button onClick={toggleDescription}>
-                {isDescriptionVisible ? "Hide Description" : "See Description"}
-              </button>
+            <div className="contact-section">
+              <p>
+                Please call{" "}
+                <span
+                  className="phone-number"
+                  onClick={() => togglePhoneNumber(agent_number)}
+                >
+                  {isPhoneVisible
+                    ? agent_number
+                    : hashPhoneNumber(agent_number)}
+                </span>{" "}
+                (CEA No: {agent_number}) or the owner{" "}
+                <span
+                  className="phone-number"
+                  onClick={() => togglePhoneNumber(owner_number)}
+                >
+                  {isPhoneVisible
+                    ? owner_number
+                    : hashPhoneNumber(owner_number)}
+                </span>{" "}
+                to arrange for a viewing.
+              </p>
+              <div className="btnDescription">
+                <button onClick={toggleDescription}>
+                  {isDescriptionVisible
+                    ? "Hide Description"
+                    : "See Description"}
+                </button>
+              </div>
             </div>
           </div>
         </div>
